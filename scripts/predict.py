@@ -1,29 +1,28 @@
 from ultralytics import YOLO
 from pathlib import Path
+from scripts.utils import get_best_device, get_run_path
 
-def predict():
-    runs_path = Path("runs/detect")
-    run_dirs = sorted(runs_path.glob("bowtips_detect_*"), key=lambda d: d.stat().st_mtime, reverse=True)
-
-    if not run_dirs:
-        print("❌ No trained detection models found.")
+def predict(run_name: str = None):
+    device = get_best_device()
+    try:
+        run_dir = get_run_path(run_name)
+    except FileNotFoundError as e:
+        print(e)
         return
 
-    latest_run = run_dirs[0]
-    model_path = latest_run / "weights" / "best.pt"
-
+    model_path = run_dir / "weights" / "best.pt"
     if not model_path.exists():
         print(f"❌ No weights found at: {model_path}")
         return
 
     print(f"✅ Using model: {model_path}")
-
     model = YOLO(str(model_path))
+
     model.predict(
         source="data/images/val",
         save=True,
-        save_txt=True,
-        save_conf=True
+        conf=0.25,
+        device=device
     )
 
 if __name__ == "__main__":
