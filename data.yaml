@@ -1,6 +1,5 @@
 path: data
 train: images/train
 val: images/val
-nc: 1
-names: ["bugspitze"]
-kpt_shape: [1, 2]  # genau 1 Punkt pro Objekt, 2D (x/y)
+names:
+  0: bowtip

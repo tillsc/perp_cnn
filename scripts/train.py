@@ -1,13 +1,17 @@
 from ultralytics import YOLO
+from datetime import datetime
 
 def train():
-    model = YOLO("yolov8n-pose.pt")  # oder 's', 'm' etc.
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M")
+    run_name = f"bowtips_detect_{timestamp}"
+
+    model = YOLO("yolov8n.pt")  # not yolov8n-pose.pt anymore!
     model.train(
         data="data.yaml",
         epochs=50,
         imgsz=640,
         project="runs",
-        name="bugspitzen",
+        name=run_name,
         exist_ok=True
     )
 
