@@ -2,7 +2,7 @@ from ultralytics import YOLO
 from datetime import datetime
 from scripts.utils import get_best_device
 
-def train():
+def train(epochs=100, patience=20):
     device = get_best_device()
     timestamp = datetime.now().strftime("%Y%m%d_%H%M")
     run_name = f"bowtips_detect_{timestamp}"
@@ -10,7 +10,8 @@ def train():
     model = YOLO("yolov8n.pt")
     model.train(
         data="data.yaml",
-        epochs=50,
+        epochs=epochs,
+        patience=patience,
         imgsz=640,
         device=device,
         name=run_name,

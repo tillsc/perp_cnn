@@ -8,7 +8,9 @@ def main():
     parser = argparse.ArgumentParser(description="Bowtip detection CLI")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
-    subparsers.add_parser("train", help="Train the model")
+    train_parser = subparsers.add_parser("train", help="Train the model")
+    train_parser.add_argument("--epochs", type=int, default=100, help="Number of training epochs")
+    train_parser.add_argument("--patience", type=int, default=20, help="Early stopping patience")
 
     predict_parser = subparsers.add_parser("predict", help="Run prediction on validation set")
     predict_parser.add_argument("--run", required=False, help="Optional run name")
@@ -23,7 +25,7 @@ def main():
     args = parser.parse_args()
 
     if args.command == "train":
-        train()
+        train(epochs=args.epochs, patience=args.patience)
     elif args.command == "predict":
         predict(run_name=args.run)
     elif args.command == "visualize":
