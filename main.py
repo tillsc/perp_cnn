@@ -3,14 +3,15 @@ from scripts.train import train
 from scripts.predict import predict
 from scripts.visualize import visualize_predictions
 from scripts.split import split_dataset
-from scripts.label_points import run_label_tool
+from scripts.label_points import main as run_label_tool
+from scripts.generate_yolo_from_bowtips import main as generate_yolo
 
 def main():
     parser = argparse.ArgumentParser(description="Bowtip detection CLI")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     train_parser = subparsers.add_parser("train", help="Train the model")
-    train_parser.add_argument("--epochs", type=int, default=100, help="Number of training epochs")
+    train_parser.add_argument("--epochs", type=int, default=70, help="Number of training epochs")
     train_parser.add_argument("--patience", type=int, default=20, help="Early stopping patience")
 
     predict_parser = subparsers.add_parser("predict", help="Run prediction on validation set")
@@ -23,7 +24,8 @@ def main():
 
     subparsers.add_parser("split", help="Split YOLO dataset into train/val")
 
-    subparsers.add_parser("label-points")
+    subparsers.add_parser("label-points", help="Launch interactive tool to manually click bowtips on images")
+    subparsers.add_parser("generate-yolo-labels", help="Generate YOLO .txt label files from bowtips.yaml") 
 
     args = parser.parse_args()
 
@@ -37,6 +39,8 @@ def main():
         split_dataset()
     elif args.command == "label-points":
         run_label_tool()
+    elif args.command == "generate-yolo-labels":
+        generate_yolo()
 
 if __name__ == "__main__":
     main()

@@ -61,7 +61,7 @@ def draw_points(img, norm_points, width, height):
         # Draw thin green rectangle
         cv2.rectangle(img, (x1, y1), (x2, y2), color=(0, 255, 0), thickness=1)
 
-def run_label_tool():
+def main():
     images = find_all_images()
     if not images:
         print("❌ No images found.")
@@ -123,4 +123,4 @@ def run_label_tool():
                 break
 
 if __name__ == "__main__":
-    run_label_tool()
+    main()
