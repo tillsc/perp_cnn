@@ -15,14 +15,14 @@ def get_best_device():
 
 def get_run_path(run_name: str = None, prefix: str = "bowtips_detect_") -> Path:
     """
-    Resolve the path to a specific or latest run directory.
+    Get path to a specific or latest detection run, based on run folder name.
 
     Args:
-        run_name (str): Optional run directory name.
-        prefix (str): Prefix used for naming runs.
+        run_name (str): Optional specific run name.
+        prefix (str): Prefix to identify run directories.
 
     Returns:
-        Path to run directory or raises FileNotFoundError.
+        Path: Path to selected run directory.
     """
     runs_path = Path("runs/detect")
 
@@ -31,7 +31,11 @@ def get_run_path(run_name: str = None, prefix: str = "bowtips_detect_") -> Path:
         if not run_dir.exists():
             raise FileNotFoundError(f"❌ Specified run directory not found: {run_dir}")
     else:
-        run_dirs = sorted(runs_path.glob(f"{prefix}*"), key=lambda d: d.stat().st_mtime, reverse=True)
+        run_dirs = sorted(
+            runs_path.glob(f"{prefix}*"),
+            key=lambda d: d.name,
+            reverse=True  # newest name first (e.g. by date+time string)
+        )
         if not run_dirs:
             raise FileNotFoundError("❌ No trained detection runs found.")
         run_dir = run_dirs[0]
