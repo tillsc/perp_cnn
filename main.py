@@ -3,6 +3,7 @@ from scripts.train import train
 from scripts.predict import predict
 from scripts.visualize import visualize_predictions
 from scripts.split import split_dataset
+from scripts.label_points import run_label_tool
 
 def main():
     parser = argparse.ArgumentParser(description="Bowtip detection CLI")
@@ -22,6 +23,8 @@ def main():
 
     subparsers.add_parser("split", help="Split YOLO dataset into train/val")
 
+    subparsers.add_parser("label-points")
+
     args = parser.parse_args()
 
     if args.command == "train":
@@ -32,6 +35,8 @@ def main():
         visualize_predictions(run_name=args.run, source_dir=args.source, conf_threshold=args.conf)
     elif args.command == "split":
         split_dataset()
+    elif args.command == "label-points":
+        run_label_tool()
 
 if __name__ == "__main__":
     main()
