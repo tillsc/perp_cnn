@@ -10,7 +10,7 @@ def main():
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     train_parser = subparsers.add_parser("train", help="Train the model")
-    train_parser.add_argument("--epochs", type=int, default=70, help="Number of training epochs")
+    train_parser.add_argument("--epochs", type=int, default=50, help="Number of training epochs")
     train_parser.add_argument("--patience", type=int, default=20, help="Early stopping patience")
 
     predict_parser = subparsers.add_parser("predict", help="Run prediction on external image or folder")
