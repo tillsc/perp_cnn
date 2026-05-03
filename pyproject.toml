@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "perp-cnn"
+version = "0.1.0"
+description = "Bowtip detection for photofinish images using YOLO"
+authors = ["Till Schulte-Coerne <till.schulte-coerne@innoq.com>"]
+readme = "README.md"
+packages = [{ include = "perp_cnn" }]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.13"
+ultralytics = ">=8.1"
+numpy = ">=1.24"
+huggingface-hub = ">=0.20"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
